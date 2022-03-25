@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet' />
+</head>
+<body>
+    <div id="main">
+    </div>
+ 
+
+    <script>
+        var logged = false;
+
+        //I needed to define the map here, otherwise the api wont work
+        var map = null;
+
+        function getLocation(){
+            console.log("u");
+            const ip = document.getElementById("ip").value;
+            $.getJSON(`https://ipfind.co/?ip=${ip}&auth=9dd858f3-0e5b-4cd9-9bdd-2b67261e8346`, function(result){
+	            console.log('res', result);
+                //console.log(result.latitude);
+                map.setView([result.latitude, result.longitude], 9);
+            });
+
+        };
+
+        //we loading html elements, JQuery didn't recognize these elements as part of the DOM tree
+        //I had to make the onclick method call a functio here and not wait for JQuery to sense the click
+        function changeStyle(command){
+            map.addLayer(L.mapbox.styleLayer(command));
+        }
+        function loadTheMap(){
+            const username = $('#inputUser').val();
+            const password = $('#inputPass').val();
+            $.get("users.json", (data)=>{
+                if((data.users.filter(obj => obj.username === username && obj.password === password).length)){
+                    logged = true;
+                    localStorage.setItem("username",username);
+                    localStorage.setItem("password",password);
+                    checkLogged();
+                    console.log("exist");
+                }
+                else{
+                    console.log("not exist");
+                    $("#main").append("<p>You are not a member</P>");
+                }
+            })
+   
+        }
+        
+        function signOut(){
+            localStorage.clear();
+            window.location.reload();
+        }
+
+        function loginUsingLocalStorage(){
+            const username = localStorage.getItem("username");
+            const password = localStorage.getItem("password");
+            $.get("users.json", (data)=>{
+                if((data.users.filter(obj => obj.username === username && obj.password === password).length)){
+                    logged = true;
+                    checkLogged();
+                    console.log("exist");
+                }
+                else{
+                    console.log("not exist");
+                    $("#main").append("<p>You are not a member</P>");
+                }
+            })
+   
+        }
+
+    window.onload = ()=>{ 
+        if(localStorage.getItem("username")!=null && localStorage.getItem("username").length>0){
+            loginUsingLocalStorage();
+        }
+        else{
+            checkLogged();
+        }
+    }
+
+    var checkLogged = ()=>{
+        
+        //$.get("users.json", (data)=>{
+            if(!logged){
+                $.get("landing.txt", (data)=>{$("#main").append(data)});
+            }else{
+                $("#main").empty();
+                // $.get("map.txt", (data)=>{
+                    
+                // })
+                $("body").append('<div id="map"></div>');
+                $.get("map.txt", (data)=>{$("#main").append(data)});
+                
+                //document.getElementById("usernameText").innerHTML = "sdl";
+                
+                L.mapbox.accessToken = 'pk.eyJ1IjoiZ2VvcmdlYWJkdWxheml6IiwiYSI6ImNsMGhsZWFnZTAzMmEzYm1vZ3B5OHI3a2wifQ.WJk0CiEpVlCnk5-UcfddXw';
+                map = L.mapbox.map('map').setView([43.6576, -79.3798], 9).addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
+            } 
+            
+            //console.log(data.users);
+        //})
+    }
+
+    </script>
+    
+</body>
+</html>

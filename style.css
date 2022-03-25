@@ -1,0 +1,16 @@
+
+#map {
+    width: 75%;
+    height: 800px;
+    margin: 20px;
+    float: left;
+    text-align: left;
+    clear: left;
+  }
+
+.styles{
+    text-align: left;
+    float: left
+}
+
+.margin{ margin-left: 20px; display: inline;}

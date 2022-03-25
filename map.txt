@@ -1,0 +1,21 @@
+
+        <input id="ip" type="text" placeholder="99.238.35.3" value="99.238.35.3" style="margin: 20px;">
+        <button onclick="getLocation()">Get Locations</button>
+        <p style="float:right; margin-right:80px; margin-top:30px;" >You are signed as<p>
+        <p id="usernameText" style="float:right; margin-right:80px; margin-top:30px;" ><p>
+        <button style="float:right; margin-right:80px; margin-top:30px;" onclick="signOut()">Sign out</button>
+        <div style="text-align: left;">
+                <h3 class="styles">Styles</h3>
+
+                <button onclick="changeStyle('mapbox://styles/mapbox/dark-v10')" class="styles" id="dark" style="margin: 20px; background-color: grey;">Dark</button>
+
+                <button onclick="changeStyle('mapbox://styles/mapbox/satellite-v9')" class="styles" id="satellite" style="margin: 20px; background-color: rgb(211, 185, 113);">Satellite</button>
+
+                <button onclick="changeStyle('mapbox://styles/mapbox/outdoors-v11')" class="styles" id="outdoors" style="margin: 20px; background-color: rgb(100, 141, 216);">Outdoors</button>
+
+                <button onclick="changeStyle('mapbox://styles/mapbox/light-v10')" class="styles" id="light" style="margin: 20px; background-color: rgb(202, 76, 139);">Light</button>
+
+                <button onclick="changeStyle('mapbox://styles/mapbox/navigation-day-v1')" class="styles" id="navigation" style="margin: 20px; background-color: rgb(43, 187, 86);">Navigation</button>
+
+                <button onclick="changeStyle('mapbox://styles/mapbox/streets-v11')" class="styles" id="default" style="margin: 20px; background-color: rgb(173, 32, 32);">Default</button>
+        </div>
