@@ -1,7 +1,0 @@
-<h4>Sign in now to access the map</h4>
-
-<input id='inputUser' type='text' placeholder='username' />
-
-<input id='inputPass' type='password' placeholder='password' />
-        
-<button onclick='loadTheMap()' type='button'>click</button>
